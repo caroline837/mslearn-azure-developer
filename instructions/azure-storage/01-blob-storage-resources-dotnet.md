@@ -29,6 +29,7 @@ This exercise takes approximately **30** minutes to complete.
 
 In this section of the exercise you create the needed resources in Azure with the Azure CLI.
 
+
 1. In your browser navigate to the Azure portal [https://portal.azure.com](https://portal.azure.com); signing in with your Azure credentials if prompted.
 
 1. Use the **[\>_]** button to the right of the search bar at the top of the page to create a new cloud shell in the Azure portal, selecting a ***Bash*** environment. The cloud shell provides a command line interface in a pane at the bottom of the Azure portal. If you are prompted to select a storage account to persist your files, select **No storage account required**, your subscription, and then select **Apply**.
@@ -318,11 +319,9 @@ Throughout the rest of the exercise you add code in specified areas to create th
 
 ## Sign into Azure and run the app
 
-1. In the cloud shell command-line pane, enter the following command to sign into Azure.
+1. Verify that you are already signed in to Azure with the correct account by running 'az account show'.
 
-    ```
-    az login
-    ```
+This lab assumes you have already authenticated interactively before starting the exercise. If the command returns your account and expected subscription, do **not** run 'az login' again and do **not** run a subscription-selection step.
 
     **<font color="red">You must sign into Azure - even though the cloud shell session is already authenticated.</font>**
 
