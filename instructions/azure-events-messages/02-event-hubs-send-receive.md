@@ -260,15 +260,38 @@ In this section you add code to create the producer and consumer clients to send
 
 ## Sign into Azure and run the app
 
-1. In the cloud shell command-line pane, enter the following command to sign into Azure.
+1. In the cloud shell command-line pane, verify that your Azure CLI session is active.
+
+    ```
+    az account show --output table
+    ```
+1. This lab assumes you have already authenticated interactively before starting the exercise. If the command returns your account and expected subscription, do **not** run 'az login' again and do **not** run a subscription-selection step.
+
+1. If the previous command returns an authentication error, sign in and then continue.
 
     ```
     az login
     ```
 
-    **<font color="red">You must sign into Azure - even though the cloud shell session is already authenticated.</font>**
+    If browser-based sign-in is blocked in your environment, use device code authentication.
 
-    > **Note**: In most scenarios, just using *az login* will be sufficient. However, if you have subscriptions in multiple tenants, you may need to specify the tenant by using the *--tenant* parameter. See [Sign into Azure interactively using Azure CLI](https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively) for details.
+    ```
+    az login --use-device-code
+    ```
+
+    > **Note**: If you have subscriptions in multiple tenants, you may need to specify the tenant by using the *--tenant* parameter. See [Sign into Azure interactively using Azure CLI](https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively) for details.
+
+1. Confirm the correct subscription is selected before running the app.
+
+    ```
+    az account show --query "{name:name,id:id,tenantId:tenantId}" --output table
+    ```
+
+    If needed, switch subscriptions:
+
+    ```
+    az account set --subscription "<subscription-name-or-id>"
+    ```
 
 1. Start the application by running the following command:
 
@@ -298,6 +321,8 @@ Now that you finished the exercise, you should delete the cloud resources you cr
 1. In your browser navigate to the Azure portal [https://portal.azure.com](https://portal.azure.com); signing in with your Azure credentials if prompted.
 1. Navigate to the resource group you created and view the contents of the resources used in this exercise.
 1. On the toolbar, select **Delete resource group**.
-1. Enter the resource group name and confirm that you want to delete it.
+1. Enter the resource group name, select **Delete**, and complete any second confirmation dialog if shown.
+
+    If deletion fails with **AuthorizationFailed**, verify that you are signed in with the same account used to create the resources and that your account has permission to delete the resource group (for example, **Owner** or **Contributor** at resource group scope). If you don't have permission, ask your Azure administrator to complete cleanup.
 
 > **CAUTION:** Deleting a resource group deletes all resources contained within it. If you chose an existing resource group for this exercise, any existing resources outside the scope of this exercise will also be deleted. 

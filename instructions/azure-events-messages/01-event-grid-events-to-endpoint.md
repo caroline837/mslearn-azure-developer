@@ -98,6 +98,16 @@ Before subscribing to the custom topic, we need to create the endpoint for the e
     ```
 
     > **Note:** This command may take a few minutes to complete.
+    > **Troubleshooting:** If deployment fails with **InternalSubscriptionIsOverQuotaForSku**, your subscription has reached quota for the App Service SKU in that region. Update the **location** variable to a different region (for example, **westus2** or **centralus**), then rerun the resource creation steps with the new location. If needed, delete unused App Service plans/web apps in your subscription and retry.
+
+1. Verify the endpoint is reachable before creating the Event Grid subscription.
+
+    ```bash
+    nslookup ${siteName}.azurewebsites.net
+    curl -I ${siteURL}
+    ```
+
+    If DNS returns **NXDOMAIN** or the URL is unavailable, wait a few minutes and run the commands again.
 
 1. Open a new tab in your browser and navigate to the URL generated at the end of the previous script to ensure the web app is running. You should see the site with no messages currently displayed.
 
@@ -119,6 +129,8 @@ You subscribe to an Event Grid topic to tell Event Grid which events you want to
         --name TopicSubscription \
         --endpoint $endpoint
     ```
+
+    If this command fails with webhook validation errors, confirm the web app URL is reachable, then rerun the command.
 
 1. View your web app again, and notice that a subscription validation event has been sent to it. Select the eye icon to expand the event data. Event Grid sends the validation event so the endpoint can verify that it wants to receive event data. The web app includes code to validate the subscription.
 
@@ -259,6 +271,8 @@ Now that you finished the exercise, you should delete the cloud resources you cr
 1. In your browser navigate to the Azure portal [https://portal.azure.com](https://portal.azure.com); signing in with your Azure credentials if prompted.
 1. Navigate to the resource group you created and view the contents of the resources used in this exercise.
 1. On the toolbar, select **Delete resource group**.
-1. Enter the resource group name and confirm that you want to delete it.
+1. Enter the resource group name, select **Delete**, and complete any second confirmation dialog if shown.
+
+    If deletion fails with **AuthorizationFailed**, sign in with the same account used to create the resources and verify that you have permission to delete the resource group (for example, **Owner** or **Contributor** at resource group scope). If you don't have permission, ask your Azure administrator to complete cleanup.
 
 > **CAUTION:** Deleting a resource group deletes all resources contained within it. If you chose an existing resource group for this exercise, any existing resources outside the scope of this exercise will also be deleted.

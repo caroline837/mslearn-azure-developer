@@ -31,6 +31,8 @@ To complete the exercise, you need:
 
 * An Azure subscription. If you don't already have one, you can [sign up for one](https://azure.microsoft.com/).
 
+* Permission to create and deploy resources in Azure. For the Azure deployment and cleanup sections, you need at least **Contributor** (or **Owner**) permissions at subscription or resource group scope. A **Reader** role isn't sufficient.
+
 * [Visual Studio Code](https://code.visualstudio.com/) on one of the [supported platforms](https://code.visualstudio.com/docs/supporting/requirements#_platforms).
 
 * [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) is the target framework.
@@ -122,6 +124,8 @@ Before you can publish your app, you must sign in to Azure. If you already signe
 
 In this section, you create the Azure resources you need to deploy your local function app.
 
+> **Important:** If your account only has **Reader** permissions, resource creation fails with authorization errors. In that case, complete only the local run section and ask your Azure administrator to grant **Contributor** (or **Owner**) access before continuing with Azure deployment steps.
+
 1. Choose the Azure icon in the Activity bar, then in the **Resources** area select the **Create resource...** button.
 
     ![Screenshot of the Create Resources button.](./media/01/create-resource.png)    
@@ -150,6 +154,8 @@ In this section, you create the Azure resources you need to deploy your local fu
 ### Deploy the project to Azure
 
 > **! Important:** Publishing to an existing function overwrites any previous deployments.
+>
+> If the function app resource wasn't created because of insufficient permissions, skip this section. Deployment requires write permissions to the function app and related resources.
 
 1. In the command palette, search for and run the command **Azure Functions: Deploy to Function App...**.
 
@@ -162,6 +168,8 @@ In this section, you create the Azure resources you need to deploy your local fu
     ![Screenshot of the View Output button.](./media/01/function-view-output.png)
 
 ### Run the function in Azure
+
+If deployment didn't complete, this section can't be performed because there is no target function app to execute in Azure.
 
 1. Back in the **Resources** area in the side bar, expand your subscription, your new function app, and **Functions**. **Right-click** the **HttpExample** function and choose **Execute Function Now...**.
 
@@ -178,6 +186,10 @@ Now that you finished the exercise, you should delete the cloud resources you cr
 1. In your browser navigate to the Azure portal [https://portal.azure.com](https://portal.azure.com); signing in with your Azure credentials if prompted.
 1. Navigate to the resource group you created and view the contents of the resources used in this exercise.
 1. On the toolbar, select **Delete resource group**.
-1. Enter the resource group name and confirm that you want to delete it.
+1. Enter the resource group name, select **Delete**, and complete any second confirmation dialog if shown.
+
+    If deletion fails with **AuthorizationFailed**, verify that you're signed in with the same account used to create the resources and that your account has permission to delete the resource group (for example, **Owner** or **Contributor** at resource group scope). If you don't have permission, ask your Azure administrator to complete cleanup.
+
+    If resources were never created because of insufficient permissions, there is nothing to clean up for this exercise.
 
 > **CAUTION:** Deleting a resource group deletes all resources contained within it. If you chose an existing resource group for this exercise, any existing resources outside the scope of this exercise will also be deleted.

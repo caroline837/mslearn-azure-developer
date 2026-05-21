@@ -186,6 +186,9 @@ Now that the needed resources are deployed to Azure the next step is to set up t
         ExcludeEnvironmentCredential = true,
         ExcludeManagedIdentityCredential = true
     };
+
+    // In Cloud Shell, exclude managed identity so DefaultAzureCredential uses
+    // your signed-in user context (Azure CLI credential) for App Configuration data access.
     
     // Create a configuration builder to combine multiple config sources
     var builder = new ConfigurationBuilder();
@@ -225,6 +228,8 @@ Now that the needed resources are deployed to Azure the next step is to set up t
     **<font color="red">You must sign into Azure - even though the cloud shell session is already authenticated.</font>**
 
     > **Note**: In most scenarios, just using *az login* will be sufficient. However, if you have subscriptions in multiple tenants, you may need to specify the tenant by using the *--tenant* parameter. See [Sign into Azure interactively using Azure CLI](https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively) for details.
+
+1. Before running the app, confirm your code still includes `ExcludeManagedIdentityCredential = true` in **DefaultAzureCredentialOptions**. In Cloud Shell, this setting prevents **ManagedIdentityCredential** from being selected by default when that identity doesn't have App Configuration data read permissions.
 
 1. Run the following command to start the console app. The app will display the **connectionString** value you assigned to the **Dev:conStr** setting earlier in the exercise.
 
