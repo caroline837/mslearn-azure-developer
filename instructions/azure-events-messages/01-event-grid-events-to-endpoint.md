@@ -99,6 +99,8 @@ Before subscribing to the custom topic, we need to create the endpoint for the e
 
     > **Note:** This command may take a few minutes to complete.
     > **Troubleshooting:** If deployment fails with **InternalSubscriptionIsOverQuotaForSku**, your subscription has reached quota for the App Service SKU in that region. Update the **location** variable to a different region (for example, **westus2** or **centralus**), then rerun the resource creation steps with the new location. If needed, delete unused App Service plans/web apps in your subscription and retry.
+    >
+    > If the error shows **Current Limit (Total VMs): 0**, all downstream web app-dependent steps in this lab fail for the same root cause (for example: DNS **NXDOMAIN**, webhook validation failure, and missing viewer output). This is a hard subscription quota limit. Use a different subscription with available App Service quota, or request a quota increase, then restart from this section.
 
 1. Verify the endpoint is reachable before creating the Event Grid subscription.
 
